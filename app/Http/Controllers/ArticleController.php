@@ -14,11 +14,6 @@ class ArticleController extends Controller
         return ArticleResource::collection(Article::all());
     }
 
-    public function create()
-    {
-        //
-    }
-
     public function store(ArticleRequest $request)
     {
         return response()->json(
@@ -31,18 +26,17 @@ class ArticleController extends Controller
         return new ArticleResource(Article::findOrFail($id));
     }
 
-    public function edit(string $id)
+    public function update(ArticleRequest $request, string $id)
     {
-        //
-    }
+        $article = Article::findOrFail($id);
+        $article->update($request->validated());
 
-    public function update(Request $request, string $id)
-    {
-        //
+        return new ArticleResource($article);
     }
 
     public function destroy(string $id)
     {
-        //
+        $article = Article::findOrFail($id);
+        $article->delete();
     }
 }
